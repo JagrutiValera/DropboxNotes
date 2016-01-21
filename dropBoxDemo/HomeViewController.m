@@ -17,10 +17,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
-    self.restClient.delegate = self;
-
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,13 +27,15 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     if (![[DBSession sharedSession] isLinked]) {
-        [self.btnGetStarted setTitle:@"Dropbox Login" forState:UIControlStateNormal];
+        [self.btnGetStarted setTitle:@"Dropbox Login" forState:UIControlStateNormal];// will redirect to Dropbox app/page
     }else{
-        [self.btnGetStarted setTitle:@"Let's Begin" forState:UIControlStateNormal];
+        [self.btnGetStarted setTitle:@"Let's Begin" forState:UIControlStateNormal]; // Will redirect to NOTES LIST
     }
     
 }
 -(IBAction)getStartedClicked:(id)sender{
+    
+    // Check Internet Connection before authentication
     Reachability *reachability	= [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if (networkStatus == NotReachable)
@@ -60,23 +58,15 @@
     {
         if (![[DBSession sharedSession] isLinked]) {
             
-            [[DBSession sharedSession] linkFromController:self];
+            [[DBSession sharedSession] linkFromController:self];// will redirect to Dropbox app/page
         }else{
             UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             ViewController* obj = [sb instantiateViewControllerWithIdentifier:@"ViewController"];
-            [self.navigationController pushViewController:obj animated:YES];
+            [self.navigationController pushViewController:obj animated:YES];// Will redirect to NOTES LIST
         }
     }
     
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

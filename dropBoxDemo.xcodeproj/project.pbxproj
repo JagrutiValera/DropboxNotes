@@ -106,6 +106,10 @@
 				ADF9123C1C5109090094D3E6 /* MBProgressHUD.m */,
 				AD7B6C771C50BC1E008A5F5F /* AppDelegate.h */,
 				AD7B6C781C50BC1E008A5F5F /* AppDelegate.m */,
+				AD841F121C5126CA0023E19F /* CustomNavigationController.h */,
+				AD841F131C5126CA0023E19F /* CustomNavigationController.m */,
+				AD841F151C5152D50023E19F /* HomeViewController.h */,
+				AD841F161C5152D50023E19F /* HomeViewController.m */,
 				AD7B6C7A1C50BC1E008A5F5F /* ViewController.h */,
 				AD7B6C7B1C50BC1E008A5F5F /* ViewController.m */,
 				ADF9123E1C510B0A0094D3E6 /* MakeNoteViewController.h */,
@@ -115,10 +119,6 @@
 				AD7B6C821C50BC1E008A5F5F /* LaunchScreen.storyboard */,
 				AD7B6C851C50BC1E008A5F5F /* Info.plist */,
 				AD7B6C741C50BC1E008A5F5F /* Supporting Files */,
-				AD841F121C5126CA0023E19F /* CustomNavigationController.h */,
-				AD841F131C5126CA0023E19F /* CustomNavigationController.m */,
-				AD841F151C5152D50023E19F /* HomeViewController.h */,
-				AD841F161C5152D50023E19F /* HomeViewController.m */,
 			);
 			path = dropBoxDemo;
 			sourceTree = "<group>";

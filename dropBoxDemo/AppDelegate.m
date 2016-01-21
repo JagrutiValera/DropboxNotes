@@ -27,12 +27,11 @@
     
     
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    self.navigationController = [sb instantiateViewControllerWithIdentifier:@"CustomNavigationController"];
-    self.noteViewController = [sb instantiateViewControllerWithIdentifier:@"ViewController"];
-    self.homeViewControlelr = [sb instantiateViewControllerWithIdentifier:@"HomeViewController"];
     if (![[DBSession sharedSession] isLinked]) {
+        self.homeViewControlelr = [sb instantiateViewControllerWithIdentifier:@"HomeViewController"];
         self.navigationController = [[CustomNavigationController alloc]initWithRootViewController:self.homeViewControlelr];
     }else{
+        self.noteViewController = [sb instantiateViewControllerWithIdentifier:@"ViewController"];
         self.navigationController = [[CustomNavigationController alloc]initWithRootViewController:self.noteViewController];
     }
     self.navigationController.navigationBarHidden = YES;

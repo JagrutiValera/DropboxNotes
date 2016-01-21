@@ -15,7 +15,6 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate, DBRestClientDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) DBRestClient *restClient;
 @property (nonatomic, strong) CustomNavigationController* navigationController;
 @property (nonatomic, strong) HomeViewController* homeViewControlelr;
 @property (nonatomic, strong) ViewController* noteViewController;

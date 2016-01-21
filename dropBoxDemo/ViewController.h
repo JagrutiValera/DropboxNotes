@@ -10,7 +10,7 @@
 #import <DropboxSDK/DropboxSDK.h>
 
 @interface ViewController : UIViewController
-<DBRestClientDelegate, DBSessionDelegate, UITableViewDataSource, UITableViewDelegate>
+<DBRestClientDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) DBRestClient *restClient;
 @property (nonatomic, strong) NSMutableArray *arrayNotes;

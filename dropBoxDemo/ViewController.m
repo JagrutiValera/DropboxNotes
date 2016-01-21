@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
+    self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];// iniate rest
     self.restClient.delegate = self;
 
 }
@@ -30,7 +30,6 @@
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 #pragma mark -
 #pragma mark - Click Actions and Other methods
@@ -38,9 +37,7 @@
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     MakeNoteViewController* obj = [sb instantiateViewControllerWithIdentifier:@"MakeNoteViewController"];
-    
     obj.isEditing = NO;
-    
     [self.navigationController pushViewController:obj animated:YES];
 }
 
@@ -57,6 +54,8 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
 }
+
+// utility method to show alert
 -(void)showAlertWithTitle:(NSString*)title AndMessage:(NSString*)message{
     UIAlertController * alert=   [UIAlertController
                                   alertControllerWithTitle:title
@@ -73,6 +72,8 @@
     [alert addAction:ok];
     [self presentViewController:alert animated:YES completion:nil];
 }
+
+
 
 #pragma mark -
 #pragma mark - Delegates for DropBox
@@ -94,8 +95,6 @@
         self.arrayNotes = [NSMutableArray arrayWithCapacity:0];
 
         for (DBMetadata *file in metadata.contents) {
-            NSLog(@"	%@", file.filename);
-            
             if ([file.filename hasSuffix:@".txt"]) {
                 [self.arrayNotes addObject:file];
             }
@@ -148,10 +147,14 @@ loadMetadataFailedWithError:(NSError *)error {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        
+        // Cell UI
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
         cell.textLabel.textColor = [UIColor whiteColor];
         
+        
+        // ADDED separator image into the cell
         UIImageView* separatorImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, cell.contentView.frame.size.height-1, self.tblNotes.frame.size.width, 1)];
         separatorImage.backgroundColor = [UIColor lightGrayColor];
         [cell.contentView addSubview:separatorImage];
@@ -159,8 +162,8 @@ loadMetadataFailedWithError:(NSError *)error {
     
     DBMetadata* file = [self.arrayNotes objectAtIndex:indexPath.row];
     cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
-    NSString * filename = [file.filename substringToIndex:[file.filename length]-4];
-    cell.textLabel.text=filename;//[self.arrayNotes objectAtIndex:indexPath.row];
+    NSString * filename = [file.filename substringToIndex:[file.filename length]-4];// removed extension ".txt"
+    cell.textLabel.text=filename;
     
     
     return cell;
@@ -192,8 +195,6 @@ loadMetadataFailedWithError:(NSError *)error {
     
     [tableView beginUpdates];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Do whatever data deletion you need to do...
-        // Delete the row from the data source
         DBMetadata* file = [self.arrayNotes objectAtIndex:indexPath.row];
         UIAlertController * alert=   [UIAlertController
                                       alertControllerWithTitle:@"Delete?"
@@ -213,12 +214,11 @@ loadMetadataFailedWithError:(NSError *)error {
                                      }
                                      else
                                      {
-                                         [self.restClient deletePath:file.path];
+                                         [self.restClient deletePath:file.path];// will delete file from Dropbox
                                          [alert dismissViewControllerAnimated:YES completion:nil];
                                          [tableView endUpdates];
                                          [self loadDBMetadata];
                                      }
-//                                     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
 
                                  }];
         UIAlertAction* cancel = [UIAlertAction

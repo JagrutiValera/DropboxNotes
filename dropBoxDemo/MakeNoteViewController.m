@@ -18,21 +18,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
     self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     self.restClient.delegate = self;
-    self.textContent.layer.borderWidth = 1.0;
-    self.textContent.layer.borderColor = (__bridge CGColorRef _Nullable)([UIColor whiteColor]);
+
     if (self.isEditing) {
         [self setData];
         self.btnSave.enabled = NO;
     }else{
         self.btnDelete.hidden = YES;
     }
+    // add observer to get keyboard height
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
 
 }
-
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self deleteLocalFiles];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -41,7 +44,7 @@
 #pragma mark - Other Actions
 -(void)setData{
     self.textContent.text = self.strContent;
-    NSString * filename = [self.file.filename substringToIndex:[self.file.filename length]-4];
+    NSString * filename = [self.file.filename substringToIndex:[self.file.filename length]-4];// removed extension ".txt"
     self.lblTitle.text = filename;
 }
 -(void)uploadFileWithTitle: (NSString*) title andContent: (NSString*)content
@@ -53,7 +56,7 @@
     NSString *localPath = [localDir stringByAppendingPathComponent:filename];
     [text writeToFile:localPath atomically:YES encoding:NSUTF8StringEncoding error:nil];
     
-    // Upload file to Dropbox
+
     NSString *destDir = @"/";
     Reachability *reachability	= [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
@@ -63,6 +66,7 @@
     }
     else
     {
+        // Upload file to Dropbox
         if (self.isEditing) {
             [self.restClient uploadFile:filename toPath:destDir withParentRev:self.file.rev fromPath:localPath];
         }else{
@@ -72,7 +76,16 @@
     }
     
 }
-
+// Delete localy saved files
+-(void)deleteLocalFiles
+{
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSArray *fileArray = [fileMgr contentsOfDirectoryAtPath:localDir error:nil];
+    for (NSString *filename in fileArray)  {
+        [fileMgr removeItemAtPath:[localDir stringByAppendingPathComponent:filename] error:NULL];
+    }
+}
 #pragma mark - Button Actions
 -(IBAction)deleteClicked:(id)sender{
     UIAlertController * alert=   [UIAlertController
@@ -93,6 +106,7 @@
                                  }
                                  else
                                  {
+                                     // Delete file in dropbox
                                      [self.restClient deletePath:self.file.path];
                                      [MBProgressHUD showHUDAddedTo:self.view animated:YES];
                                      [alert dismissViewControllerAnimated:YES completion:nil];
@@ -132,13 +146,13 @@
         }
         title = [NSString  stringWithFormat:@"%@.txt",result];
     }
-
+//save file
     [self uploadFileWithTitle:title andContent:self.textContent.text];
 }
 -(IBAction)cancelClicked:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
--(IBAction)dismissTextClicked:(id)sender{
+-(IBAction)dismissTextClicked:(id)sender{// for dismissing keyboard for textView
     [self.textContent resignFirstResponder];
     [self setTextViewFrame];
 
@@ -162,7 +176,6 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification {
     self.kbHeight = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
-    NSLog(@"%f", self.kbHeight);
     [self setTextViewFrame];
 }
 -(void)setTextViewFrame{
@@ -180,10 +193,7 @@
     self.btnSave.enabled=YES;
 }
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if ([text isEqualToString:@"\n"]) {
-//        [textView resignFirstResponder];
-    } else {
-    }
+
     return YES;
 }
 
@@ -222,14 +232,5 @@
 
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

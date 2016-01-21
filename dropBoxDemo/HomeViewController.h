@@ -12,11 +12,9 @@
 
 
 @interface HomeViewController : UIViewController
-<DBRestClientDelegate>
 
 -(IBAction)getStartedClicked:(id)sender;
 
-@property (nonatomic, strong) DBRestClient *restClient;
 @property (nonatomic, weak) IBOutlet UIButton *btnGetStarted;
 
 @end
