@@ -83,6 +83,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IIt-gy-ubT">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <action selector="dismissTextClicked:" destination="msx-Gj-YZm" eventType="touchUpInside" id="I0V-k8-Ay0"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xh2-Ua-ais">
                                 <rect key="frame" x="10" y="20" width="50" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -96,7 +103,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" id="HwF-N4-Qhe">
-                                <rect key="frame" x="10" y="104" width="300" height="418"/>
+                                <rect key="frame" x="10" y="104" width="300" height="454"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.66666666666666663" green="0.63313256659846773" blue="0.46180063151161888" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -107,7 +114,7 @@
                                 </connections>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write your note here... " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3NF-Pf-hTc">
-                                <rect key="frame" x="10" y="65" width="300" height="31"/>
+                                <rect key="frame" x="10" y="65" width="255" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -125,10 +132,20 @@
                                     <action selector="saveClicked:" destination="msx-Gj-YZm" eventType="touchUpInside" id="6xd-q0-7tS"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="cPW-5l-psy">
+                                <rect key="frame" x="280" y="66" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <state key="normal" backgroundImage="delete.png"/>
+                                <connections>
+                                    <action selector="deleteClicked:" destination="msx-Gj-YZm" eventType="touchUpInside" id="ag4-8g-8K3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="btnDelete" destination="cPW-5l-psy" id="RI0-Ae-Gmn"/>
                         <outlet property="btnSave" destination="bpf-sl-VAW" id="ZrZ-lZ-rex"/>
                         <outlet property="lblTitle" destination="3NF-Pf-hTc" id="2FR-gC-ein"/>
                         <outlet property="textContent" destination="HwF-N4-Qhe" id="xme-aS-Xmh"/>
@@ -146,10 +163,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fkE-FQ-TEo">
+                                <rect key="frame" x="20" y="30" width="280" height="149"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <string key="text">To run this application, you will need internet connection. Also you will need to connect with your dropbox account to start making and managing NOTES</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vff-YL-Bon">
-                                <rect key="frame" x="102" y="227" width="117" height="113"/>
+                                <rect key="frame" x="15" y="317" width="291" height="113"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <color key="backgroundColor" red="0.30492029786708202" green="0.67777673004555661" blue="0.74129971590909083" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="25"/>
+                                <state key="normal" title="Connect with Dropbox">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="getStartedClicked:" destination="grZ-Ci-O5X" eventType="touchUpInside" id="Pf9-sn-PEv"/>
                                 </connections>
@@ -158,10 +187,16 @@
                         <color key="backgroundColor" red="0.66666666669999997" green="0.63313256659999995" blue="0.4618006315" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="PxU-bM-ztr"/>
+                    <connections>
+                        <outlet property="btnGetStarted" destination="vff-YL-Bon" id="Bxk-yd-YaJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wiV-OJ-7Vs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="241" y="401"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="delete.png" width="128" height="128"/>
+    </resources>
 </document>

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "MBProgressHUD.h"
 #import "MakeNoteViewController.h"
+#import "Reachability.h"
 
 @interface ViewController ()
 
@@ -18,25 +19,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    if (![[DBSession sharedSession] isLinked]) {
-//        [[DBSession sharedSession] linkFromController:self];
-//    }
     self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     self.restClient.delegate = self;
 
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if ([[DBSession sharedSession] isLinked]) {
-        [self.restClient loadMetadata:@"/"];
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    }
+    [self loadDBMetadata];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark -
+#pragma mark - Click Actions and Other methods
 - (IBAction)makeNoteClicked:(id)sender {
 
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -47,15 +44,37 @@
     [self.navigationController pushViewController:obj animated:YES];
 }
 
-#pragma mark -
-#pragma mark - Delegates for DBSession
--(void)sessionDidReceiveAuthorizationFailure:(DBSession *)session userId:(NSString *)userId{
-    NSLog(@"Session fail");
+-(void)loadDBMetadata{
+    Reachability *reachability	= [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        [self showAlertWithTitle:@"No Internet" AndMessage:@"To continue this process you need internet connection. Please check your internet connectivity"];
+    }
+    else
+    {
+        [self.restClient loadMetadata:@"/"];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+}
+-(void)showAlertWithTitle:(NSString*)title AndMessage:(NSString*)message{
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:title
+                                  message:message
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Ok"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                         }];
+    
+    [alert addAction:ok];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
-
-
-#pragma mark - 
+#pragma mark -
 #pragma mark - Delegates for DropBox
 - (void)restClient:(DBRestClient *)client uploadedFile:(NSString *)destPath
               from:(NSString *)srcPath metadata:(DBMetadata *)metadata {
@@ -154,8 +173,17 @@ loadMetadataFailedWithError:(NSError *)error {
     NSString *localDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *localPath = [localDir stringByAppendingPathComponent:file.filename];
 
-    [self.restClient loadFile:file.path intoPath:localPath];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    Reachability *reachability	= [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+    if (networkStatus == NotReachable)
+    {
+        [self showAlertWithTitle:@"No Internet" AndMessage:@"To continue this process you need internet connection. Please check your internet connectivity"];
+    }
+    else
+    {
+        [self.restClient loadFile:file.path intoPath:localPath];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
 
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -177,11 +205,19 @@ loadMetadataFailedWithError:(NSError *)error {
                                  style:UIAlertActionStyleDefault
                                  handler:^(UIAlertAction * action)
                                  {
-                                     [self.restClient deletePath:file.path];
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     [tableView endUpdates];
-                                     [self.restClient loadMetadata:@"/"];
-                                     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                                     Reachability *reachability	= [Reachability reachabilityForInternetConnection];
+                                     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
+                                     if (networkStatus == NotReachable)
+                                     {
+                                         [self showAlertWithTitle:@"No Internet" AndMessage:@"To continue this process you need internet connection. Please check your internet connectivity"];
+                                     }
+                                     else
+                                     {
+                                         [self.restClient deletePath:file.path];
+                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         [tableView endUpdates];
+                                         [self loadDBMetadata];
+                                     }
 //                                     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath, nil] withRowAnimation:UITableViewRowAnimationFade];
 
                                  }];

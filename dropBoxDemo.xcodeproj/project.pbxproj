@@ -18,7 +18,8 @@
 		AD7B6C901C50BC6C008A5F5F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7B6C8F1C50BC6C008A5F5F /* Security.framework */; };
 		AD841F141C5126CA0023E19F /* CustomNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD841F131C5126CA0023E19F /* CustomNavigationController.m */; };
 		AD841F171C5152D50023E19F /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD841F161C5152D50023E19F /* HomeViewController.m */; };
-		AD841F211C5160360023E19F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AD841F201C5160360023E19F /* Reachability.m */; };
+		AD841F211C5160360023E19F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = AD841F201C5160360023E19F /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AD841F241C5170530023E19F /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = AD841F231C5170530023E19F /* delete.png */; };
 		ADF912361C5108C40094D3E6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF912351C5108C40094D3E6 /* Foundation.framework */; };
 		ADF912381C5108CA0094D3E6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF912371C5108CA0094D3E6 /* CoreGraphics.framework */; };
 		ADF9123A1C5108D10094D3E6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADF912391C5108D10094D3E6 /* UIKit.framework */; };
@@ -46,6 +47,7 @@
 		AD841F161C5152D50023E19F /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		AD841F1F1C5160360023E19F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		AD841F201C5160360023E19F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		AD841F231C5170530023E19F /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		ADF912351C5108C40094D3E6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ADF912371C5108CA0094D3E6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		ADF912391C5108D10094D3E6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -97,6 +99,7 @@
 		AD7B6C731C50BC1E008A5F5F /* dropBoxDemo */ = {
 			isa = PBXGroup;
 			children = (
+				AD841F221C5170520023E19F /* Images */,
 				AD841F1F1C5160360023E19F /* Reachability.h */,
 				AD841F201C5160360023E19F /* Reachability.m */,
 				ADF9123B1C5109090094D3E6 /* MBProgressHUD.h */,
@@ -126,6 +129,14 @@
 				AD7B6C751C50BC1E008A5F5F /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AD841F221C5170520023E19F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				AD841F231C5170530023E19F /* delete.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,6 +196,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD841F241C5170530023E19F /* delete.png in Resources */,
 				AD7B6C841C50BC1E008A5F5F /* LaunchScreen.storyboard in Resources */,
 				AD7B6C811C50BC1E008A5F5F /* Assets.xcassets in Resources */,
 				AD7B6C7F1C50BC1E008A5F5F /* Main.storyboard in Resources */,

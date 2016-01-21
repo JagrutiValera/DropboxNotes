@@ -33,7 +33,7 @@
     if (![[DBSession sharedSession] isLinked]) {
         [self.btnGetStarted setTitle:@"Dropbox Login" forState:UIControlStateNormal];
     }else{
-        [self.btnGetStarted setTitle:@"Let's start" forState:UIControlStateNormal];
+        [self.btnGetStarted setTitle:@"Let's Begin" forState:UIControlStateNormal];
     }
     
 }
@@ -42,19 +42,32 @@
     NetworkStatus networkStatus = [reachability currentReachabilityStatus];
     if (networkStatus == NotReachable)
     {
-//        [Utilities showAlertWithMessage:NO_INTERNET_CONNECTION];
-    }
+        UIAlertController * alert=   [UIAlertController
+                                      alertControllerWithTitle:@"No Internet"
+                                      message:@"Please Check Your Internet Connection"
+                                      preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* ok = [UIAlertAction
+                             actionWithTitle:@"Ok"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                             }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];    }
     else
     {
+        if (![[DBSession sharedSession] isLinked]) {
+            
+            [[DBSession sharedSession] linkFromController:self];
+        }else{
+            UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ViewController* obj = [sb instantiateViewControllerWithIdentifier:@"ViewController"];
+            [self.navigationController pushViewController:obj animated:YES];
+        }
     }
-    if (![[DBSession sharedSession] isLinked]) {
-        
-        [[DBSession sharedSession] linkFromController:self];
-    }else{
-        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        ViewController* obj = [sb instantiateViewControllerWithIdentifier:@"ViewController"];
-        [self.navigationController pushViewController:obj animated:YES];
-    }
+    
 }
 /*
 #pragma mark - Navigation

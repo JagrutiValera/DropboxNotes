@@ -22,10 +22,12 @@
 @property(nonatomic, weak) IBOutlet UIButton *btnDelete;
 @property(nonatomic, weak) IBOutlet UILabel *lblTitle;
 @property BOOL isEditing;
+@property CGFloat kbHeight;
 @property (nonatomic, strong) NSString* strContent;
 @property (nonatomic, strong) NSString* strLocalPath;
 
 -(IBAction)saveClicked:(id)sender;
 -(IBAction)cancelClicked:(id)sender;
 -(IBAction)deleteClicked:(id)sender;
+-(IBAction)dismissTextClicked:(id)sender;
 @end
