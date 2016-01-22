@@ -153,9 +153,9 @@ loadMetadataFailedWithError:(NSError *)error {
         cell.textLabel.font = [UIFont boldSystemFontOfSize:20];
         cell.textLabel.textColor = [UIColor whiteColor];
         
-        
         // ADDED separator image into the cell
         UIImageView* separatorImage = [[UIImageView alloc]initWithFrame:CGRectMake(0, cell.contentView.frame.size.height-1, self.tblNotes.frame.size.width, 1)];
+        [separatorImage setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         separatorImage.backgroundColor = [UIColor lightGrayColor];
         [cell.contentView addSubview:separatorImage];
     }
