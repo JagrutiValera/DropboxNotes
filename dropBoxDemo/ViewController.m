@@ -16,7 +16,7 @@
 @end
 
 @implementation ViewController
-
+//view cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];// iniate rest
