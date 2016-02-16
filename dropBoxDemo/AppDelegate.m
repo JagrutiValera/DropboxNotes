@@ -20,6 +20,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     //Git test comments from temp_jvalera
+    //git test - third level branching
     DBSession *dbSession = [[DBSession alloc]
                             initWithAppKey:@"ro6s4q8mtsuclhl"
                             appSecret:@"5kyj5b1xtgve79g"
