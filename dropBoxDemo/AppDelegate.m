@@ -16,7 +16,7 @@
 
 @implementation AppDelegate
 
-
+//comment
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     DBSession *dbSession = [[DBSession alloc]
